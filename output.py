@@ -109,21 +109,28 @@ class Templar(tenjin.Engine):
     def dateRange(self, start, end=None):
         """ Return date range in string format.
         """
-        if isinstance(start, str):
-            start = datetime.datetime.strptime(start, "%Y-%m-%d")
-        elif isinstance(start, int):
-            start = datetime.datetime.fromtimestamp(start)
-        elif start is None:
+
+        try:
+            if start is None or start.strip() is '':
+                raise ValueError()
+            elif isinstance(start, str):
+                start = datetime.datetime.strptime(start, "%Y-%m-%d")
+            elif isinstance(start, int):
+                start = datetime.datetime.fromtimestamp(start)
+        except ValueError:
             start = datetime.datetime.today()
 
-        if end is None:
+        try:
+            if end is None:
+                raise ValueError()
+            elif isinstance(end, datetime.timedelta):
+                end = start + end
+            elif isinstance(end, str):
+                end = datetime.datetime.strptime(end, "%Y-%m-%d")
+            elif isinstance(end, int):
+                end = datetime.datetime.fromtimestamp(end)
+        except ValueError:
             return self.formatDate(start, "{day:d}.&nbsp;{month:d}.&nbsp;{year:d}")
-        elif isinstance(end, datetime.timedelta):
-            end = start + end
-        elif isinstance(end, str):
-            end = datetime.datetime.strptime(end, "%Y-%m-%d")
-        elif isinstance(end, int):
-            end = datetime.datetime.fromtimestamp(end)
 
         if start > end:
             (start,end) = (end,start)
