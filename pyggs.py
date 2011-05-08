@@ -21,7 +21,7 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 
-__version__ = "0.2.19"
+__version__ = "0.2.20"
 
 
 from collections import OrderedDict
@@ -36,11 +36,13 @@ from shutil import rmtree
 import sys
 import urllib.request
 
+sys.path.insert(0, os.path.join(sys.path[0], "libs"))
+
 from configuration import ProfileConfig
 from output import Templar, Theme
-import libs.console as console
-import libs.gcparser as gcparser
-from libs.versioning import VersionInfo
+import console as console
+import gcparser as gcparser
+from versioning import VersionInfo
 
 from plugins.base import Storage
 import plugins
