@@ -1,0 +1,4 @@
+<table#{{css("table")}}>
+<caption#{{css("caption")}}>USA: #{{total["caches"]}} caches found in #{{total["states"]}} states</caption>
+<tr><th#{{css("th")}}><img src="http://www.gsak.info/stats2/europeboundaries.gif" width="580" height="300" style="background: url('http://www.world66.com/myworld66/visitedStates/statemap?visited=#{{id}}')" /><br /><small#{{css("small")}}>Map from <a href="http://world66.com">world66.com</a></small></th></tr>
+</table>
