@@ -1,7 +1,7 @@
 <table#{{css("table", "graph", "fixedtable")}}>
 <col#{{css("col-graph-header")}} />
 <col span="#{{len(elevations)}}"#{{css("col-graph")}} />
-<caption#{{css("caption")}}>Found caches by elevation (average elevation #{{average}}&nbsp;m)</caption>
+<caption#{{css("caption")}}>Found caches by elevation (average elevation #{{average}}&nbsp;#{{units}})</caption>
 
 <tr#{{css("small")}}>
 <td#{{css("td","graph-cell","graph-leftheader")}}></td>

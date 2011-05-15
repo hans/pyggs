@@ -32,12 +32,25 @@ class Plugin(base.Plugin):
         self.about = _("Adds graph and average value of finds by elevation.")
 
 
+    def setup(self):
+        config = self.master.config
+
+        config.assertSection(self.NS)
+        config.defaults[self.NS] = {"units": "m"}
+        config.update(self.NS, "units", _("Units for cache elevation (m = meters, ft = feet):"), validate = lambda val: None if val == "m" or val == "ft" else _("Please enter 'm' (meters) or 'ft' (feet)."))
+
+
     def run(self):
         myFinds = self.myfinds.storage.select()
         myFinds = self.myfinds.storage.fetchAssoc(myFinds, "guid")
         caches = self.cache.storage.getDetails(myFinds.keys())
+
         for cache in caches:
             cache["elevation"] = int(cache["elevation"])
+
+            if self.config["units"] == "ft":
+                cache["elevation"] = round(cache["elevation"] * 3.2808399)
+
             if cache["elevation"] == -9999:
                 caches.remove(cache)
             else:
@@ -71,6 +84,7 @@ class Plugin(base.Plugin):
             top = max(top, data["count"])
 
         templateData = {}
+        templateData["units"] = self.config["units"]
         templateData["average"] = average
         templateData["top"] = top
         templateData["elevations"] = elevations
